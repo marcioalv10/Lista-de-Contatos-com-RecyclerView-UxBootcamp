@@ -25,14 +25,14 @@ class MainActivity : AppCompatActivity() {
         updateList()
     }
 
-    private fun bindView(){
+    private fun bindView() {
 
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(this)
     }
 
 
-    private fun updateList(){
+    private fun updateList() {
         adapter.updateList(
             arrayListOf(
                 Contact(
@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
                 )
 
 
-
             )
         )
     }
@@ -105,23 +104,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //return super.onCreateOptionsMenu(menu)
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu )
+        inflater.inflate(R.menu.menu, menu)
         return true
     }
 
 
-    private fun showToast (message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT ).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //return super.onOptionsItemSelected(item)
-        return when(item.itemId){
-            R.id.item_menu1 ->{
+        return when (item.itemId) {
+            R.id.item_menu1 -> {
                 showToast("Exibindo item de Menu 1")
                 return true
             }
-            R.id.item_menu2 ->{
+            R.id.item_menu2 -> {
                 showToast("Exibindo item de Menu 2")
                 return true
             }
