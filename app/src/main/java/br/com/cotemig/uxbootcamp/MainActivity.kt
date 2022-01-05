@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,10 +44,60 @@ class MainActivity : AppCompatActivity() {
         //Evento de Abrir e fechar o Drawer layout
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
         drawerLayout.addDrawerListener(toggle)
+
+        /*teste na implementação de clique no Drawer
+       drawerLayout.setOnClickListener {
+          when () {
+
+          }
+        }
+        */
+
+
         toggle.syncState()
+
+
+        //Adicionando a captura do clique nos itens Draw Menu
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView.setNavigationItemSelectedListener {
+          //  it.isChecked = true
+             when(it.itemId) {
+                R.id.item_menu1 -> {
+                    showToast("Aeeee Menu 1")
+                    return@setNavigationItemSelectedListener true
+                }
+                 R.id.item_menu2 -> {
+                     showToast("Aeeee Menu 2")
+                     return@setNavigationItemSelectedListener true
+                 }
+                 else -> {
+
+                 return@setNavigationItemSelectedListener true
+             }
+            }
+
+        }
+
 
     }
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+       // return super.onContextItemSelected(item)
+        return when (item.itemId) {
+            R.id.item_menu1 -> {
+                showToast("Exibindo item de Menu Draw 1")
+                return true
+            }
+            R.id.item_menu2 -> {
+                showToast("Exibindo item de Menu Draw 2")
+                return true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+
+
+
+    }
     private fun bindView() {
 
         rvList.adapter = adapter
@@ -122,6 +173,9 @@ class MainActivity : AppCompatActivity() {
             )
         )
     }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //return super.onCreateOptionsMenu(menu)
