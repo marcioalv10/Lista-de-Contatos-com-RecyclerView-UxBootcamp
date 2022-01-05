@@ -2,4 +2,6 @@
     <string name="app_name">UxBootcamp</string>
     <string name="menu_1">menu 1</string>
     <string name="menu_2">menu 2</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
 </resources>
