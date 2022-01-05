@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="TextViewDefault" parent="Widget.AppCompat.TextView">
+        <!-- Estilo customizado para a cor verde -->
+        <item name="android:textColor">#005500</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
