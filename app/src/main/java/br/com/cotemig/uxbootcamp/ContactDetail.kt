@@ -12,8 +12,15 @@ class ContactDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_detail)
 
+        initToolbar()
         getExtras()
         bindViews()
+    }
+
+    private fun initToolbar(){
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        //setActionBar(toolbar)
+        setSupportActionBar(toolbar)
     }
 
     private fun getExtras(){
