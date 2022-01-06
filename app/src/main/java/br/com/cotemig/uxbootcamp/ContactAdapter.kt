@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactAdapterViewHolder>() {
+class ContactAdapter (var listener: ClickItemContactListener): RecyclerView.Adapter<ContactAdapter.ContactAdapterViewHolder>() {
 
     //Atributo de classe onde vai armazenar a lista de Contatos
     private val list: MutableList<Contact> = mutableListOf()
@@ -15,7 +15,7 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactAdapterViewHol
     //Cria cada item visual na tela
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactAdapterViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.contact_item, parent, false)
-        return ContactAdapterViewHolder(view)
+        return ContactAdapterViewHolder(view, list, listener)
     }
 
     //Roda em cada item do array, obtem e preenche o item na tela
@@ -37,11 +37,18 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactAdapterViewHol
     }
 
     //classe responsável por gerenciar cada item do array
-    class ContactAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ContactAdapterViewHolder(itemView: View, var list: List<Contact>, var listener: ClickItemContactListener) : RecyclerView.ViewHolder(itemView) {
 
         private val tvNome: TextView = itemView.findViewById(R.id.tv_name)
         private val tvPhone: TextView = itemView.findViewById(R.id.tv_telefone)
         private val ivPhoto: ImageView = itemView.findViewById(R.id.image_view_photograph)
+
+
+        init {
+            itemView.setOnClickListener {
+                listener.clickItemcontact(list[adapterPosition])
+            }
+        }
 
         //Método que popula os dados
         fun bind(contact: Contact) {
