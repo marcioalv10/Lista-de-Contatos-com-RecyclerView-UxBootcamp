@@ -2,10 +2,32 @@ package br.com.cotemig.uxbootcamp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 
 class ContactDetail : AppCompatActivity() {
+
+    private var contact: Contact? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_detail)
+
+        getExtras()
+        bindViews()
+    }
+
+    private fun getExtras(){
+            contact = intent.getParcelableExtra(EXTRA_CONTACT)
+    }
+
+    //Método para setas os dados na tela
+    private fun bindViews(){
+        findViewById<TextView>(R.id.tv_nome).text = contact?.name
+        findViewById<TextView>(R.id.tv_telefone).text = contact?.phone
+
+    }
+
+    companion object{
+        const val EXTRA_CONTACT: String = "EXTRA_CONTACT"
     }
 }
