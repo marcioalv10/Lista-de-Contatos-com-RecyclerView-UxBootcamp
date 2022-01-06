@@ -1,6 +1,8 @@
-    package br.com.cotemig.uxbootcamp
+package br.com.cotemig.uxbootcamp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,14 +12,17 @@ import android.view.View
 import android.widget.Toast
 
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.edit
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.cotemig.uxbootcamp.ContactDetail.Companion.EXTRA_CONTACT
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
-class MainActivity : AppCompatActivity(), ClickItemContactListener{
+class MainActivity : AppCompatActivity(), ClickItemContactListener {
 
     private val rvList: RecyclerView by lazy {
         findViewById(R.id.rv_list)
@@ -30,21 +35,58 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
         setContentView(R.layout.drawer_menu)
 
         initDrawer()
+
+        //fetch simulando o retorno de uma API
+        fetchListContact()
+
         bindView()
-        updateList()
+        // updateList()
     }
 
+    private fun fetchListContact() {
+        val list = arrayListOf(
+            Contact(
+                "Marcio",
+                "33211-2122",
+                "img.jpg"
+            ),
+            Contact(
+                "Kellen ",
+                "99555-2122",
+                "img.jpg"
+            )
+        )
+
+        getInstanceSharedPreferences().edit {
+            //putString("contacts", )
+            putString("contacts", Gson().toJson(list))
+            commit()
+        }
+
+    }
+
+    private fun getInstanceSharedPreferences() : SharedPreferences{
+        return getSharedPreferences("br.com.cotemig.uxbootcamp.PREFERENCES", Context.MODE_PRIVATE)
+    }
+
+
     //inicialização do Drawer Layout
-    private fun initDrawer (){
+    private fun initDrawer() {
         val drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
         //setActionBar(toolbar)
 
-       setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)
 
         //Evento de Abrir e fechar o Drawer layout
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
         drawerLayout.addDrawerListener(toggle)
 
         /*teste na implementação de clique no Drawer
@@ -62,20 +104,20 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
         //Adicionando a captura do clique nos itens Draw Menu
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener {
-          //  it.isChecked = true
-             when(it.itemId) {
+            //  it.isChecked = true
+            when (it.itemId) {
                 R.id.item_menu1 -> {
                     showToast("Aeeee Menu 1")
                     return@setNavigationItemSelectedListener true
                 }
-                 R.id.item_menu2 -> {
-                     showToast("Aeeee Menu 2")
-                     return@setNavigationItemSelectedListener true
-                 }
-                 else -> {
+                R.id.item_menu2 -> {
+                    showToast("Aeeee Menu 2")
+                    return@setNavigationItemSelectedListener true
+                }
+                else -> {
 
-                 return@setNavigationItemSelectedListener true
-             }
+                    return@setNavigationItemSelectedListener true
+                }
             }
 
         }
@@ -84,7 +126,7 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-       // return super.onContextItemSelected(item)
+        // return super.onContextItemSelected(item)
         return when (item.itemId) {
             R.id.item_menu1 -> {
                 showToast("Exibindo item de Menu Draw 1")
@@ -98,14 +140,30 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
         }
 
 
-
     }
+
     private fun bindView() {
 
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(this)
+
+
+        updateList2()
+
+
     }
 
+    private fun getListContacts(): List<Contact>{
+        val list = getInstanceSharedPreferences().getString("contacts", "[]")
+        val turnsType = object : TypeToken<List<Contact>>(){}.type
+
+        return Gson().fromJson(list, turnsType)
+    }
+
+
+    private fun updateList2(){
+        adapter.updateList(getListContacts())
+    }
 
     private fun updateList() {
         adapter.updateList(
@@ -175,8 +233,6 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
             )
         )
     }
-
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
