@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.cotemig.uxbootcamp.ContactDetail.Companion.EXTRA_CONTACT
 import com.google.android.material.navigation.NavigationView
 
 
@@ -116,57 +117,57 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
                 ),
                 Contact(
                     "Kellen ",
-                    "33211-2122",
+                    "99555-2122",
                     "img.jpg"
                 ),
                 Contact(
                     "Helen ",
-                    "33211-2122",
+                    "88888-8888",
                     "img.jpg"
                 ),
                 Contact(
                     "Geise ",
-                    "33211-2122",
+                    "54585-5544",
                     "img.jpg"
                 ),
                 Contact(
                     "Lorrayne ",
-                    "33211-2122",
+                    "35522-1542",
                     "img.jpg"
                 ),
                 Contact(
                     "Tania ",
-                    "33211-2122",
+                    "85545-6355",
                     "img.jpg"
                 ),
                 Contact(
                     "Samuel ",
-                    "33211-2122",
+                    "955598-1544",
                     "img.jpg"
                 ),
                 Contact(
                     "Kleber ",
-                    "33211-2122",
+                    "99888-5455",
                     "img.jpg"
                 ),
                 Contact(
                     "Thiago ",
-                    "33211-2122",
+                    "99887-7848",
                     "img.jpg"
                 ),
                 Contact(
                     "Moacir ",
-                    "33211-2122",
+                    "99988-1222",
                     "img.jpg"
                 ),
                 Contact(
                     "Katia ",
-                    "33211-2122",
+                    "888777-2122",
                     "img.jpg"
                 ),
                 Contact(
                     "Jussara ",
-                    "33211-2122",
+                    "66884-2157",
                     "img.jpg"
                 )
 
@@ -207,6 +208,8 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener{
 
     override fun clickItemcontact(contact: Contact) {
         var intent = Intent(this, ContactDetail::class.java)
+        //Método chave-valor para enviar os dados através de telas android
+        intent.putExtra(EXTRA_CONTACT, contact)
         startActivity(intent)
     }
 
